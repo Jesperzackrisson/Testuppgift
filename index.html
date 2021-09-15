@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testuppgift Front End @Sphinxly</title>
+</head>
+<style>
+body {
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
+}
+#bild {
+    width: 50%;
+    object-fit: fill;
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    filter: grayscale(100%);
+}
+#bild.active {
+    filter: grayscale(0);
+    transition: all 3s;
+    width: 75%;
+}
+body {
+    background-color: #f1f1f1;
+}
+.angeNamn {
+    text-align: center;
+    padding-top: 0rem;
+}
+.angeNamn > h3 {
+    color: #333;
+    font-size: 2rem;
+}
+.angeNamn > input {
+    width: 30%;
+    border: none;
+    border-bottom: 2px solid #333;
+    color: #333;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+#sendBtn {
+    border: none;
+    background-color: darkred;
+    padding: .5rem .5rem;
+    pointer-events: none;
+    color: #f1f1f1;
+}
+#sendBtn.active {
+    background-color: darkgreen;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: 1s;
+}
+#changeImg {
+    border: none;
+    background-color: #333;
+    color: #f1f1f1;
+    padding: .5rem .5rem;
+    cursor: pointer;
+}
+.changeImgBtn {
+    position: absolute;
+    top: 20.7%;
+    left: 25%;
+}
+.output {
+    display: flex;
+    color: #333;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -5%);
+}
+.output > h3 {
+    font-size: 3rem;
+    width: 100%;
+}
+#result {
+    margin-left: .5rem;
+    text-align: center;
+}
+
+</style>
+<body id="body">
+    <img src="https://images.pexels.com/photos/3384815/pexels-photo-3384815.jpeg?cs=srgb&dl=pexels-stein-egil-liland-3384815.jpg&fm=jpg" alt="" id="bild">
+
+    <div class="angeNamn" id="inputDiv">
+        <h3>Hej, Vad heter du?</h3>
+        <input type="text" placeholder="" id="userInput" >
+        <button id="sendBtn" onclick="getUserName()">OK</button>
+        
+    </div>
+
+    <div class="output">
+        <h3 id="result"></h3>
+    </div>
+
+    <div class="changeImgBtn">
+        <button id="changeImg" onclick="changeImgDiv()">Njut av bilden</button>
+    </div>
+    
+    <script>
+
+        const input = document.querySelector('#userInput')
+        let userNameResult = document.getElementById('result');
+        let changeImgBtn = document.getElementById('changeImg');
+       
+       
+        input.onkeyup = () => {
+            let userInput = input.value;
+            if(userInput != 0) {
+                sendBtn.classList.add('active');
+            } else {
+                sendBtn.classList.remove('active');
+            }   
+        }
+
+        function getUserName() {
+            let userName = input.value;
+            let userExists = localStorage.getItem('userNameValue')
+            let userNameRes  = document.querySelector('result')
+            let user1 = 'Hejpa';
+            let user2 = 'Dejpa'
+           
+            if ( userExists == userName) {
+                userNameResult.innerHTML =` Välkommen tillbaka ` + userExists + ', ' + `${user1} och ${user2}` ; 
+            } else {
+                localStorage.setItem('userNameValue', userName);
+                userNameResult.innerHTML = 'Hej ' + userName + '! ' + `och välkommen tillbaka ${user1} och ${user2}` 
+            }
+            const formDiv = document.getElementById('inputDiv');
+            if (formDiv.style.display === 'none') {
+                formDiv.style.display = 'block';
+            } else {
+                formDiv.style.display = 'none';
+            }        
+        }
+
+        function changeImgDiv() {
+            let showImg = document.getElementById('bild');
+            let userNameRes = document.getElementById('result');
+            let changeImgBtn = document.getElementById('changeImg');
+                showImg.classList.add('active');
+                if ( userNameRes === 'none') {
+                    userNameRes.style.display = 'block';  
+                } else {
+                    userNameRes.style.display = 'none';
+                    changeImgBtn.style.display = 'none'
+                } 
+        }
+
+        
+
+    </script>
+</body>
+</html>
